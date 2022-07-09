@@ -1,0 +1,42 @@
+{% extends 'basestore.html.twig' %}
+
+{% block title %}Cart index{% endblock %}
+
+{% block body %}
+    <h1>Cart index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Image</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for cart in carts %}
+            <tr>
+                <td>{{ cart.Product.Name }}</td>
+                <td><img src="/uploads/photos/{{cart.Product.Photo}}" style="width:100px"/></td>
+                <td><a href="{{ path('app_cart_down', {'id': cart.id}) }}" class="btn btn-danger">-</a> 
+                &nbsp; {{ cart.quantity }} &nbsp; <a href="{{ path('app_cart_up', {'id': cart.id}) }}" class="btn btn-primary">+</a></td>
+                <td>{{ cart.quantity * cart.Product.Price}}</td>
+                <td>
+                    <a href="{{ path('app_cart_delete', {'id': cart.id}) }}" onclick="return confirm('Are you sure you want to delete this cart?')">Delete</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        <tfooter>
+            <tr>
+                <a href="{{path('app_order_new')}}">Create order</a>
+            </tr>
+        </footer>
+        </tbody>
+    </table>
+{% endblock %}
